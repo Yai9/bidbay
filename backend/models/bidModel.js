@@ -10,6 +10,10 @@ const BidSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    longDescription: {
+      type: String,
+      required: false,
+    },
     image: {
       type: String,
       required: true,

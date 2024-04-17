@@ -2,7 +2,7 @@ import { colors, ThemeOptions } from "@mui/material";
 
 const customColors = {
   primary: {
-    main: "#89cff0",
+    main: "#389fff",
     dark: "#BC1616",
   },
 };

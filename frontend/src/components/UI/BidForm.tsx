@@ -24,7 +24,7 @@ const BidForm: FC<Props> = ({
     control,
     formState: { errors },
   } = useForm({
-    defaultValues: defaultValues,
+    defaultValues,
     resolver: yupResolver(validationSchema),
   });
   const submitForm = handleSubmit(onSubmit);

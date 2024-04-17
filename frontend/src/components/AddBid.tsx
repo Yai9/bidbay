@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import { GET_LEAD_BY_ID_END_POINT } from './consts';
 // import { useSnackbar } from '../../contexts/snackbar/SnackbarContext';
 // import useFormModal from '../crm/user-form/hooks/useFormModal';
-import Button from "@mui/material/Button";
 // import usePostData from '../../hooks/usePostData';
 // import { handleEmptyStringProperties } from '../crm/user-form/form/helpers';
 // import { API_CRM } from '../../utils/apiBases';
 //import { useSnackbarErrorMessage } from '../../hooks/useSnackbarErrorMessage';
 import { defaultFormValues } from "../defaultFormValues";
 import BidForm from "./UI/BidForm";
-import { postData } from "../api";
-import { Bid } from "../types";
+import { BidState, bidActions } from "../store/bidSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { handleFieldData } from "./UI/helpers";
 
-const AddBid = () => {
+interface Props {
+  isEditMode?: boolean;
+  setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AddBid = ({ isEditMode = false, setIsEditMode }: Props) => {
   //   const { openSnackbar } = useSnackbar();
   //const { handleErrorMessage } = useSnackbarErrorMessage();
   //   const { openModal, toggleModals } = useFormModal();
   const [resetData, setResetData] = useState<boolean>(false);
+  const selectedBidItem = useSelector((state: BidState) => state.selectedItem);
 
   //   const { mutate, isLoading } = usePostData(`${API_CRM}${GET_LEAD_BY_ID_END_POINT}`, {
   //     onSuccess: () => {
@@ -29,26 +35,29 @@ const AddBid = () => {
   //     // },
   //   });
 
+  const dispatch = useDispatch();
+
+  const bids = useSelector((state: BidState) => state.items);
+  const selectedBid = useSelector((state: BidState) => state.selectedItem);
+
+  const defaultFormValues = handleFieldData(bids, selectedBid);
+
   const submitForm = async (data: any) => {
-    await fetch(`/api/bids`, {
-      method: "POST",
+    const url = `/api/bids${isEditMode ? `/${selectedBidItem._id}` : ""}`;
+
+    const result = await fetch(url, {
+      method: isEditMode ? "PATCH" : "POST",
       body: JSON.stringify({ ...data }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    console.log(data, "data");
-  };
 
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(`/api/bids`);
-      await res.json();
-    })();
-  });
-
-  const handleAddNewLead = () => {
-    // toggleModals(true, false);
+    if (isEditMode) {
+      dispatch(bidActions.updateBid({ _id: selectedBidItem._id, ...data }));
+      setIsEditMode(false);
+    }
+    return result;
   };
 
   return (

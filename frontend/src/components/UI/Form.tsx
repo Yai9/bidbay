@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Fields } from "../../types";
 import ControlledInput from "./ControlledInput";
+import { useTheme } from "@mui/material";
 
 const styles = {
   submit: {
@@ -16,6 +17,7 @@ const styles = {
   submitBtn: {
     padding: "12px",
     fontSize: "14px",
+    color: "#ffffff",
   },
 };
 
@@ -32,11 +34,19 @@ interface Props {
 const Form: FC<Props> = ({ submit, isLoading, formHelpers }) => {
   const { control, errors } = formHelpers;
 
+  const theme = useTheme();
+
   return (
     <Box>
       <form
         onSubmit={submit}
-        style={{ padding: "0 24px", display: "flex", flexDirection: "column" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          border: `2px solid ${theme.palette.primary.main}`,
+          borderRadius: "5px",
+          padding: "20px",
+        }}
       >
         {formFields.map((field) => {
           return (

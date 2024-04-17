@@ -24,13 +24,18 @@ const getBid = async (req, res) => {
 };
 
 const createBid = async (req, res) => {
-  const { title, description, image } = req.body;
+  const { title, description, image, longDescription } = req.body;
 
   try {
     if (!title || !description || !image) {
       throw new Error("Bid validation failed.");
     }
-    const bid = await Bid.create({ title, description, image });
+    const bid = await Bid.create({
+      title,
+      description,
+      image,
+      longDescription,
+    });
     res.status(200).json(bid);
   } catch (err) {
     res.status(400).json({ error: err });

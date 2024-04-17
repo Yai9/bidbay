@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
-import BidItem from "./BidItem";
+import BidItem from "../bids/BidItem";
 import { Box } from "@mui/material";
 import { BidState, bidActions } from "../../store/bidSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-interface Props {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const BidList: React.FC<Props> = ({ setShowModal }: Props) => {
+const MyAuctions: React.FC = () => {
   const dispatch = useDispatch();
   const { setBids } = bidActions;
   const bids = useSelector((state: BidState) => state.items);
@@ -18,15 +14,6 @@ const BidList: React.FC<Props> = ({ setShowModal }: Props) => {
     const data = await res.json();
     dispatch(setBids(data));
   };
-
-  // const handleEditItem = async (id: string) => {
-  //   const res = await fetch(`/api/bids/${id}`, {
-  //     method: "PATCH",
-  //   });
-  //   const data = await res.json();
-  //   dispatch(setBids(data));
-  // };
-
   useEffect(() => {
     fetchBids();
     return () => {
@@ -48,17 +35,15 @@ const BidList: React.FC<Props> = ({ setShowModal }: Props) => {
     >
       {reversedBids.map((item) => (
         <BidItem
-          id={item._id}
           key={item._id}
           title={item.title}
           description={item.description}
-          longDescription={item.longDescription}
           image={item.image}
-          setModalOpen={setShowModal}
+          setModalOpen={() => {}}
         />
       ))}
     </Box>
   );
 };
 
-export default BidList;
+export default MyAuctions;

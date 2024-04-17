@@ -7,7 +7,7 @@ const RoutesList = () => {
   return (
     <Routes>
       <Route path="/" element={<BidsPage />} />
-      <Route path="/profile" element={<UserProfile />} />
+      <Route path="/my-profile" element={<UserProfile />} />
     </Routes>
   );
 };

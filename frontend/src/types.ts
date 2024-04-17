@@ -3,12 +3,14 @@ import { defaultFormValues } from "./defaultFormValues";
 export interface Bid {
   title: string;
   description: string;
+  longDescription?: string;
   image: string;
 }
 
 export interface Fields {
   title: string;
   description: string;
+  longDescription?: string;
   image: string;
 }
 

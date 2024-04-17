@@ -46,7 +46,10 @@ function Header() {
   const theme = useTheme();
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#89cff0" }}>
+    <AppBar
+      position="static"
+      sx={{ backgroundColor: theme.palette.primary.main as string }}
+    >
       <SideDrawer open={open} toggleDrawer={setDrawerOpen} />
       <Container maxWidth="xl">
         <Toolbar disableGutters>

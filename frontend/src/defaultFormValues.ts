@@ -1,9 +1,11 @@
-import { Fields, FormField } from "./types";
+import { BidData } from "./store/bidSlice";
+import { Bid, Fields, FormField } from "./types";
 import * as yup from "yup";
 
-export const defaultFormValues: Fields = {
+export const defaultFormValues = {
   title: "",
   description: "",
+  longDescription: "",
   image: "",
 };
 
@@ -17,6 +19,10 @@ export const formFields: FormField[] = [
     label: "Description",
   },
   {
+    name: "longDescription",
+    label: "Long Description",
+  },
+  {
     name: "image",
     label: "Bid Image",
   },
@@ -25,5 +31,6 @@ export const formFields: FormField[] = [
 export const validationSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
   description: yup.string().required("Description is required"),
+  longDescription: yup.string(),
   image: yup.string().required("Image is required"),
 });
